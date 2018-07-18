@@ -1,0 +1,71 @@
+#tableName {
+  text-align: center;
+}
+
+body {
+    max-width:1000px;
+    margin: auto;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-image: url("../img/image-bkg.jpg");
+}
+
+/* Styling for map, must have these to display on document */
+#map {
+    height: 600px;
+    width: 50%;  
+    margin: auto;
+}
+
+.pac-card {
+    margin: 10px 10px 0 0;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    font-family: Roboto;
+  }
+
+#pac-container {
+    padding-bottom: 12px;
+    margin-right: 12px;
+  }
+
+.pac-controls {
+    display: inline-block;
+    padding: 5px 11px;
+  }
+
+.pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 75px;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+  }
+
+
+
+
+
+  .row {
+      margin: 0 auto;
+  }
