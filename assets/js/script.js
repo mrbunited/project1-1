@@ -246,7 +246,7 @@ searchBox.addListener('places_changed', function() {
       var faveCity = "";
   
   
-      faveCity = $("#searchInput").val().trim();
+      faveCity = $("#pac-input").val().trim();
   
           // Change what is saved in firebase, only save if the input is correct
           database.ref().push({
