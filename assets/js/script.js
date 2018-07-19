@@ -301,7 +301,7 @@ $("#submit").on("click", function (event) {
         "date": "This Week",
         "include": "tags,categories",
         page_size: 5,
-        sort_order: "date",
+        sort_order: "popularity",
     }
     
       EVDB.API.call("/events/search", oArgs, function(oData) {
