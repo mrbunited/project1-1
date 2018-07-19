@@ -296,15 +296,18 @@ $("#submit").on("click", function (event) {
     var oArgs = {
         app_key: app_key.valueOf(),
         q: query.valueOf(),
-        where: where.valueOf(),
-        "date": "2018-07-21-2018-07-22",
+        location: where.valueOf(),
+        within: 1,
+        "date": "This Week",
         "include": "tags,categories",
         page_size: 5,
-        sort_order: "popularity",
+        sort_order: "date",
     }
     
       EVDB.API.call("/events/search", oArgs, function(oData) {
           console.log(oData)
+          console.log(oData.events.event[0].title);
+          console.log(oData.events.event[0].venue_name);
           console.log(oData.events.event[0].start_time);
         });
     }
