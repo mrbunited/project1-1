@@ -21,36 +21,38 @@
                 <p class="lead">Witty tagline goes here.</p>
             </div>
         </div>
+    </div>
     </container>
 
 
     <container>
         <div class="row">
             <!-- Search Box -->
-            <div>
-                   <div id="val-msg" style="color:Red; display:none">wrong input</div>
+            <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
+                <form class="form-inline">
+                    <label class="sr-only" for="inlineFormInputName2">City</label>
                     <input type="text" class="form-control mb-2 mr-sm-2 controls" id="pac-input" placeholder="Choose a City">
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
-                  <p><small>Type your city</small></p>
-                    
+                    <button type="submit" class="btn btn-primary mb-2" id="submit">Submit</button>
+                    <div id="val-msg" style="color:Red; display:none">wrong input</div>
+                    <p><small>Type your city</small></p>
                     <button type="button" class="btn btn-danger mb-2" id="fave-btn">Add to favorites</button>
+                </form>
             </div>
         </div>
     
         <div class="row">
             <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
-                <!-- <input id="pac-input" class="controls" type="text" placeholder="Search Box"> -->
                 <div id= "map"></div>
             </div>
         </div>
 
     
-        <div class="row">
-            <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
-                <!-- <input id="pac-input" class="controls" type="text" placeholder="Search Box"> -->
-                <div id= "map"></div>
-            </div>
-        </div>
+        
+
+
+
+
+
     </container>
     <br><br>
     <div class="container" id="recentSearchBox">

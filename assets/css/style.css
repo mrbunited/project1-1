@@ -15,7 +15,7 @@ body {
 /* Styling for map, must have these to display on document */
 #map {
     height: 600px;
-    width: 50%;  
+    width: 100%;  
     margin: auto;
 }
 
