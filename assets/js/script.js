@@ -288,7 +288,7 @@ $("#submit").on("click", function (event) {
 
 
 
-//This returs results but no in an object
+//Returns JSON object for EventfulAPI
   function eventApi() {
     var app_key = "zQnmrwHxBczn4Htn"
     var where = $("#pac-input").val().trim();
