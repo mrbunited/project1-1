@@ -270,45 +270,45 @@ $("#fave-btn").on("click", function (event) {
 
 
 $("#submit").on("click", function (event) {
-  event.preventDefault();
-  var searchQ = $("#pac-input").val().trim();
-  var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
+//   event.preventDefault();
+//   var searchQ = $("#pac-input").val().trim();
+//   var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
 
-  $.ajax({
-    url: queryURL,
-    method: "GET",
-    dataType: JSON
-  })
-    // We store all of the retrieved data inside of an object called "response"
-    .then(function (response) {
-      // Log the resulting object
-      console.log(response);
-    })
-});
+//   $.ajax({
+//     url: queryURL,
+//     method: "GET",
+//     dataType: JSON
+//   })
+//     // We store all of the retrieved data inside of an object called "response"
+//     .then(function (response) {
+//       // Log the resulting object
+//       console.log(response);
+//     })
+// });
 
 
 
 //This returs results but no in an object
-//   function show_alert2() {
-//     var app_key = "zQnmrwHxBczn4Htn"
-//     var where = $("#pac-input").val().trim();
-//     var query = "music"
-//     var oArgs = {
-//         app_key: app_key.valueOf(),
-//         q: query.valueOf(),
-//         where: where.valueOf(),
-//         "date": "2018061000-2018082000",
-//         "include": "tags,categories",
-//         page_size: 5,
-//         sort_order: "popularity",
-//     }
+  function eventApi() {
+    var app_key = "zQnmrwHxBczn4Htn"
+    var where = $("#pac-input").val().trim();
+    var query = "music"
+    var oArgs = {
+        app_key: app_key.valueOf(),
+        q: query.valueOf(),
+        where: where.valueOf(),
+        "date": "2018-07-21-2018-07-22",
+        "include": "tags,categories",
+        page_size: 5,
+        sort_order: "popularity",
+    }
     
-//       EVDB.API.call("/events/search", oArgs, function(oData) {
-//           console.log(JSON.stringify(oData));
-//         });
-//     }
-//   show_alert2();
-// });
+      EVDB.API.call("/events/search", oArgs, function(oData) {
+          console.log(oData)
+        });
+    }
+  eventApi();
+});
   
 
 
