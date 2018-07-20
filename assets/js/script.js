@@ -313,7 +313,7 @@ $("#submit").on("click", function (event) {
           console.log(oData.events.event[0].title);
           console.log(oData.events.event[0].venue_name);
           console.log(oData.events.event[0].start_time);
-          console.log(oData.events.event[0].end_time);
+          console.log(oData.events.event[0].stop_time);
 
         });
     }
