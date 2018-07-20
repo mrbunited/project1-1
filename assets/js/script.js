@@ -263,9 +263,9 @@ $("#fave-btn").on("click", function (event) {
     // $("recent-div").text("Recently Searched Cities : " + recentCity);
     $("#recent-div").append(newDiv);
   })
-  firebase.app().delete().then(function () {
-    console.log("[DEFAULT] App is Gone Now");
-  });
+  // firebase.app().delete().then(function () {
+  //   console.log("[DEFAULT] App is Gone Now");
+  // });
 })
 
 
