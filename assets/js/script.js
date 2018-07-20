@@ -304,7 +304,7 @@ $("#submit").on("click", function (event) {
         sort_order: "popularity",
     }
     
-      EVDB.API.call("/events/search&scheme=https", oArgs, function(oData) {
+      EVDB.API.call("/events/search&scheme=http", oArgs, function(oData) {
           console.log(oData)
           console.log(oData.events.event[0].title);
           console.log(oData.events.event[0].venue_name);
@@ -313,19 +313,6 @@ $("#submit").on("click", function (event) {
     }
   eventApi();
 });
-
-//backup event api just in case there's trouble with the other
-//     var queryURL = "http://api.jambase.com/events?zipCode=60657&radius=10&page=0&api_key=q9hy7t34kv9baczurv3nsdg4&o=json"
-
-  
-//     $.ajax({
-//       url: queryURL,
-//       method: "GET"
-//     })
-//     .then(function (response) {
-//       console.log(response.Events[0].Date);
-//     })
-// });
 
 
 
