@@ -304,7 +304,7 @@ $("#submit").on("click", function (event) {
         sort_order: "popularity",
     }
     
-      EVDB.API.call("/events/search&scheme=http", oArgs, function(oData) {
+      EVDB.API.call("/events/search", oArgs, function(oData) {
           console.log(oData)
           console.log(oData.events.event[0].title);
           console.log(oData.events.event[0].venue_name);
