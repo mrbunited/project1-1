@@ -291,12 +291,11 @@ $("#submit").on("click", function (event) {
 //Returns JSON object for EventfulAPI
   function eventApi() {
     var app_key = "zQnmrwHxBczn4Htn"
-    var https = "&scheme=https";
     var where = $("#pac-input").val().trim();
     var query = "music"
+    var https = "&scheme=https";
     var oArgs = {
         app_key: app_key.valueOf(),
-        https: https.valueOf(),
         q: query.valueOf(),
         location: where.valueOf(),
         within: 1,
@@ -304,6 +303,7 @@ $("#submit").on("click", function (event) {
         "include": "tags,categories",
         page_size: 5,
         sort_order: "popularity",
+        https: https.valueOf(),
     }
     
       EVDB.API.call("/events/search", oArgs, function(oData) {
