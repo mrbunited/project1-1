@@ -6,7 +6,9 @@ var config = {
   storageBucket: "project-1-travel.appspot.com",
   messagingSenderId: "798853647697"
 };
-
+$("#weather-div").hide();
+$("#event-div").hide();
+$("#fave-div").hide();
 firebase.initializeApp(config);
 
 var database = firebase.database();
@@ -16,7 +18,7 @@ $("#submit").on("click", function (event) {
   event.preventDefault();
   var searchQ = $("#pac-input").val().trim();
   console.log("Searched: " + searchQ);
-
+  
   // Weather API
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchQ + "&units=imperial&appid=17d594f0d627f8656d2fab0b960e2a20";
 
@@ -33,15 +35,15 @@ $("#submit").on("click", function (event) {
 
       // Log the resulting object
       console.log(response);
-
-      // Transfer content to HTML
-      //   $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-      //   $(".wind").text("Wind Speed: " + response.wind.speed);
-      //   $(".humidity").text("Humidity: " + response.main.humidity);
-      //   $(".temp").text("Temperature (F) " + response.main.temp);
-      // var windSpeedAndDeg = JSON.parse(response.wind)
-      // console.log(windSpeedAndDeg);
-      // Log the data in the console as well
+      
+      var weatherDiv = $("#weather-display").html("<h1>" + response.name + " Weather Details</h1>" + "<div>Wind speed " +response.wind.speed + "mph</div>"+"<div> humidity " +response.main.humidity + "%</div>"+"<div>Temperature " +response.main.temp + "F</div>");
+      $("#weather-div").show();
+      
+      
+      
+      
+      
+      
       console.log("Wind Speed: " + response.wind);
       console.log("Humidity: " + response.main.humidity);
       console.log("Temperature (F): " + response.main.temp);
@@ -245,15 +247,14 @@ $("#submit").on("click", function (event) {
 database.ref().on("child_added", function (snapshot) {
   // var faveDisplay = (snapshot.val().faveCity);
   // console.log(faveDisplay);
-  var newDiv = $("<div>").addClass('recent-view').text(snapshot.val().faveCity);
-  // $("recent-div").text("Recently Searched Cities : " + recentCity);
-  $("#recent-div").append(newDiv);
+  var newDiv = $("#fave-display").html("<div>" +(snapshot.val().faveCity) + "</div>"); 
+  $("#fave-display").append(newDiv);
 })
 
 $("#fave-btn").on("click", function (event) {
   event.preventDefault();
   // databse strats here
-
+  $("#fave-div").show();
   var faveCity = "";
 
 
@@ -314,6 +315,9 @@ $("#submit").on("click", function (event) {
           console.log(oData.events.event[0].venue_name);
           console.log(oData.events.event[0].start_time);
           console.log(oData.events.event[0].stop_time);
+          var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " +oData.events.event[0].venue_name + "</div>"+"<div> Start Time: " +oData.events.event[0].start_time + "</div>" + "<br>" +
+                         ("<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " +oData.events.event[1].venue_name + "</div>"+"<div> Start Time: " +oData.events.event[1].start_time + "</div>"));
+          $("#event-div").show();
 
         });
     }
