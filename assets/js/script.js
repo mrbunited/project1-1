@@ -1,14 +1,16 @@
 var config = {
-  apiKey: "AIzaSyCZzfdRrhwJAeF05SkN8G2kjiFLvE8HIHk",
-  authDomain: "project-1-travel.firebaseapp.com",
-  databaseURL: "https://project-1-travel.firebaseio.com",
-  projectId: "project-1-travel",
-  storageBucket: "project-1-travel.appspot.com",
-  messagingSenderId: "798853647697"
+  apiKey: "AIzaSyBe-1yn8vaYvg0OQ-1XzmVnQz3TOEOV1s4",
+  authDomain: "eventfinder-7ceef.firebaseapp.com",
+  databaseURL: "https://eventfinder-7ceef.firebaseio.com",
+  projectId: "eventfinder-7ceef",
+  storageBucket: "eventfinder-7ceef.appspot.com",
+  messagingSenderId: "296051194271"
 };
-$("#weather-div").hide();
-$("#event-div").hide();
-$("#fave-div").hide();
+// $("#weather-div").hide();
+// $("#event-div").hide();
+// $("#fave-div").hide();
+$("#portfolio").hide();
+$("#recentSearchBox").hide();
 firebase.initializeApp(config);
 
 var database = firebase.database();
@@ -18,7 +20,7 @@ $("#submit").on("click", function (event) {
   event.preventDefault();
   var searchQ = $("#pac-input").val().trim();
   console.log("Searched: " + searchQ);
-  
+
   // Weather API
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchQ + "&units=imperial&appid=17d594f0d627f8656d2fab0b960e2a20";
 
@@ -35,15 +37,15 @@ $("#submit").on("click", function (event) {
 
       // Log the resulting object
       console.log(response);
-      
-      var weatherDiv = $("#weather-display").html("<h1>" + response.name + " Weather Details</h1>" + "<div>Wind speed " +response.wind.speed + "mph</div>"+"<div> humidity " +response.main.humidity + "%</div>"+"<div>Temperature " +response.main.temp + "F</div>");
-      $("#weather-div").show();
-      
-      
-      
-      
-      
-      
+
+      var weatherDiv = $("#weather-display").html("<h1>" + response.name + " Weather Details</h1>" + "<div>Wind speed " + response.wind.speed + "mph</div>" + "<div> humidity " + response.main.humidity + "%</div>" + "<div>Temperature " + response.main.temp + "F</div>");
+      // $("#weather-div").show();
+      $("#portfolio").show();
+
+
+
+
+
       console.log("Wind Speed: " + response.wind);
       console.log("Humidity: " + response.main.humidity);
       console.log("Temperature (F): " + response.main.temp);
@@ -240,30 +242,39 @@ $("#submit").on("click", function (event) {
     sessionStorage.setItem("Location", userSearch);
 
     // And display that name for the user using "localStorage.getItem"
-    $("#recentSearches").append("<tr><td>" + userSearch + "</td></tr>");
+    $("table tbody").append("<tr><td>" + userSearch + "</td></tr>");
+    $("#recentSearches").show();
   }
 });
 
+
+
+
+// databse starts here
+var faveDisplay = [];
+
 database.ref().on("child_added", function (snapshot) {
-  // var faveDisplay = (snapshot.val().faveCity);
-  // console.log(faveDisplay);
-  var newDiv = $("#fave-display").html("<div>" +(snapshot.val().faveCity) + "</div>"); 
-  $("#fave-display").append(newDiv);
-})
 
-$("#fave-btn").on("click", function (event) {
-  event.preventDefault();
-  // databse strats here
-  $("#fave-div").show();
-  var faveCity = "";
+  faveDisplay = (snapshot.val().faveCity);
+
+  $("#fave-display").prepend("<div>" + faveDisplay + "</div>");
+
+  $("#fave-btn").on("click", function (event) {
+    event.preventDefault();
+
+    $("#fave-div").show();
+    var faveCity = "";
 
 
-  faveCity = $("#pac-input").val().trim();
+    faveCity = $("#pac-input").val().trim();
 
-  // Change what is saved in firebase, only save if the input is correct
-  database.ref().push({
-    faveCity: faveCity,
-    dateAdded: firebase.database.ServerValue.TIMESTAMP
+    // Change what is saved in firebase, only save if the input is correct
+    database.ref().push({
+      faveCity: faveCity,
+      dateAdded: firebase.database.ServerValue.TIMESTAMP
+
+    })
+
   });
 
   // firebase.app().delete().then(function () {
@@ -273,54 +284,54 @@ $("#fave-btn").on("click", function (event) {
 
 
 $("#submit").on("click", function (event) {
-//   event.preventDefault();
-//   var searchQ = $("#pac-input").val().trim();
-//   var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
+  //   event.preventDefault();
+  //   var searchQ = $("#pac-input").val().trim();
+  //   var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
 
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET",
-//     dataType: JSON
-//   })
-//     // We store all of the retrieved data inside of an object called "response"
-//     .then(function (response) {
-//       // Log the resulting object
-//       console.log(response);
-//     })
-// });
+  //   $.ajax({
+  //     url: queryURL,
+  //     method: "GET",
+  //     dataType: JSON
+  //   })
+  //     // We store all of the retrieved data inside of an object called "response"
+  //     .then(function (response) {
+  //       // Log the resulting object
+  //       console.log(response);
+  //     })
+  // });
 
 
 
-//Returns JSON object for EventfulAPI
+  //Returns JSON object for EventfulAPI
   function eventApi() {
     var app_key = "zQnmrwHxBczn4Htn"
     var where = $("#pac-input").val().trim();
     var query = "music"
     var https = "&scheme=https";
     var oArgs = {
-        app_key: app_key.valueOf(),
-        q: query.valueOf(),
-        location: where.valueOf(),
-        within: 1,
-        "date": "This Week",
-        "include": "tags,categories",
-        page_size: 5,
-        sort_order: "popularity",
-        https: https.valueOf(),
+      app_key: app_key.valueOf(),
+      q: query.valueOf(),
+      location: where.valueOf(),
+      within: 1,
+      "date": "This Week",
+      "include": "tags,categories",
+      page_size: 5,
+      sort_order: "popularity",
+      https: https.valueOf(),
     }
-    
-      EVDB.API.call("/events/search", oArgs, function(oData) {
-          console.log(oData)
-          console.log(oData.events.event[0].title);
-          console.log(oData.events.event[0].venue_name);
-          console.log(oData.events.event[0].start_time);
-          console.log(oData.events.event[0].stop_time);
-          var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " +oData.events.event[0].venue_name + "</div>"+"<div> Start Time: " +oData.events.event[0].start_time + "</div>" + "<br>" +
-                         ("<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " +oData.events.event[1].venue_name + "</div>"+"<div> Start Time: " +oData.events.event[1].start_time + "</div>"));
-          $("#event-div").show();
 
-        });
-    }
+    EVDB.API.call("/events/search", oArgs, function (oData) {
+      console.log(oData)
+      console.log(oData.events.event[0].title);
+      console.log(oData.events.event[0].venue_name);
+      console.log(oData.events.event[0].start_time);
+      console.log(oData.events.event[0].stop_time);
+      var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
+        ("<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>"));
+      $("#event-div").show();
+
+    });
+  }
   eventApi();
 });
 
