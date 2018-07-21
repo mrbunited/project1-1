@@ -8,67 +8,75 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
     <script type="text/javascript" src="https://api.eventful.com/js/api"></script>
 </head>
 
 <body>
     <div id="main">
-    <container>
-        <div class="jumbotron jumbotron-fluid">
+        <section id="home" class="jumbotron vertical-centre bgd shadow" data-speed="5" data-type="background">
             <div class="container">
-                <h1 class="display-4">App Name</h1>
-                <p class="lead">Witty tagline goes here.</p>
-            </div>
-        </div>
-    </div>
-    </container>
+              <div id="main-title">EventFinder</div>
+              <h3>Want to know what's happening around you?</h3>
+              <h3>Just enter your location and scroll down!</h3>
+              <br><br>
+              <h1>Ready? Go!</h1>
+              <br>
+                <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
+                    <form class="form-inline">
+                        <label class="sr-only" for="inlineFormInputName2">City</label>
+                        <input type="text" class="form-control  controls" id="pac-input" placeholder="Choose a City">
+                        <button type="submit" class="btn btn-primary " id="submit">Submit</button>
+                        <div id="val-msg" style="color:Red; display:none">wrong input</div>
+                        <button type="button" class="btn btn-danger " id="fave-btn">Add to favorites</button>
+                    </form>
+                </div>
+
+    
+          </section>
 
 
     <container>
-        <div class="row">
-            <!-- Search Box -->
-            <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
-                <form class="form-inline">
-                    <label class="sr-only" for="inlineFormInputName2">City</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 controls" id="pac-input" placeholder="Choose a City">
-                    <button type="submit" class="btn btn-primary mb-2" id="submit">Submit</button>
-                    <div id="val-msg" style="color:Red; display:none">wrong input</div>
-                    <p><small>Type your city</small></p>
-                    <button type="button" class="btn btn-danger mb-2" id="fave-btn">Add to favorites</button>
-                </form>
-            </div>
-        </div>
-    
+
         <div class="row">
             <div class="col-xs-12 col-s-12 col-m-12 col-lg-12">
                 <div id= "map"></div>
             </div>
         </div>
        <br>
-       <div class="card" id="weather-div" style="width: 40rem;">
-               <div class="card-body">
-                   <p class="card-text" id="weather-display"></p>
-               </div>
-        </div>
-        <div class="card" id="event-div" class="container-fluid" style="width: 40rem;">
-            <div class="card-body">
-                <h5 class="card-title" id="event-display"></h5>
-                <p class="card-text"></p>
-            </div>
-        </div>
-        <br>
-        <div class="card" id="fave-div" class="container-fluid" style="width: 40rem;">
-            <div class="card-body">
-                <h5 class="card-title" id="fave-display"></h5>
-                <p class="card-text"></p>
-            </div>
-        </div>
-       <br>
-    
-        
 
 
+
+        <section id="portfolio" class="bgd shadow" data-speed="5" data-type="background">
+            <div class="container" >
+              <h1 class="page-header"> Oh, here is what we found!</h1>
+              <h3> Have fun!</h3>
+              <div class="row">
+
+                <div class="col-md-4">
+                  <div class="thumbnail">
+
+                    <p><strong>Weather</strong></p>
+                    <div id="weather-display"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                      <p><strong>Events</strong></p>
+                      <div id="event-display"></div>
+                    </div>
+                  </div>
+
+                <div class="col-md-4">
+                  <div class="thumbnail">
+
+                    <p><strong>Favorites</strong></p>
+                    <div id="fave-display"></div>
+                  </div>
+                </div>
+              </div>
+          </section>
 
 
 
@@ -83,7 +91,7 @@
           </thead>
           <tbody>
             <!-- Insert searches here -->
-          </tbody>
+</tbody>
         </table>
       </div>
 
@@ -91,7 +99,7 @@
 
 
 </div>
-<div id="recent-div">Your favorites: </div>
+
 
 
     <script src="assets/js/script.js"></script>
