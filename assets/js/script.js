@@ -1,10 +1,10 @@
 var config = {
-  apiKey: "AIzaSyBe-1yn8vaYvg0OQ-1XzmVnQz3TOEOV1s4",
-  authDomain: "eventfinder-7ceef.firebaseapp.com",
-  databaseURL: "https://eventfinder-7ceef.firebaseio.com",
-  projectId: "eventfinder-7ceef",
-  storageBucket: "eventfinder-7ceef.appspot.com",
-  messagingSenderId: "296051194271"
+    apiKey: "AIzaSyDtmu1aLMppGBlZwWD1VcS3F1QOZR3Ote8",
+    authDomain: "eventfinder-project1.firebaseapp.com",
+    databaseURL: "https://eventfinder-project1.firebaseio.com",
+    projectId: "eventfinder-project1",
+    storageBucket: "eventfinder-project1.appspot.com",
+    messagingSenderId: "228677590028"
 };
 // $("#weather-div").hide();
 // $("#event-div").hide();
