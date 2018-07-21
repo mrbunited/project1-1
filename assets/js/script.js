@@ -348,3 +348,4 @@ database.ref().on("child_added", function (snapshot) {
 
   });
 });
+console.log("it's finally over")
