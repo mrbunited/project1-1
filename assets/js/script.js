@@ -84,11 +84,10 @@ function initMap() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   }
-
   var input = document.getElementById("pac-input");
   var searchBox = new google.maps.places.SearchBox(input);
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+  
 
   $("#submit").on("click", function (event) {
     event.preventDefault();
@@ -98,6 +97,7 @@ function initMap() {
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function () {
       searchBox.setBounds(map.getBounds());
+      zoom: 12;
     });
 
     var markers = [];
@@ -136,7 +136,8 @@ function initMap() {
           map: map,
           icon: icon,
           title: place.name,
-          position: place.geometry.location
+          position: place.geometry.location,
+          animation: google.maps.Animation.DROP,
         }));
 
         if (place.geometry.viewport) {
@@ -147,6 +148,7 @@ function initMap() {
         }
       });
       map.fitBounds(bounds);
+      
     });
   })
   // Bias the SearchBox results towards current map's viewport.
@@ -173,7 +175,7 @@ function initMap() {
     markers.forEach(function (marker) {
       marker.setMap(null);
     });
-    markers = [];
+    
 
     // Get icon, name, location
     var bounds = new google.maps.LatLngBounds();
@@ -190,13 +192,84 @@ function initMap() {
         scaledSize: new google.maps.Size(25, 25)
       };
 
-      // Create a marker for each search
+      // Create a marker for each search city location
       markers.push(new google.maps.Marker({
         map: map,
         icon: icon,
         title: place.name,
         position: place.geometry.location
       }));
+     
+      //This function returns JSON object from the Eventful.com API, set query parameters here
+      function eventApi() {
+        var app_key = "zQnmrwHxBczn4Htn"
+        var where = $("#pac-input").val().trim();
+        var query = "music"
+        var https = "&scheme=https";
+        var oArgs = {
+          app_key: app_key.valueOf(),
+          q: query.valueOf(),
+          location: where.valueOf(),
+          within: 1,
+          "date": "This Week",
+          "include": "tags,categories",
+          page_size: 5,
+          sort_order: "popularity",
+          https: https.valueOf(),
+        }
+        //use the Eventful library to call the query
+        EVDB.API.call("/events/search", oArgs, function (oData) {
+          var event1 = oData.events.event[0]
+          var event2 = oData.events.event[1]
+          var event3 = oData.events.event[2]
+          var event4 = oData.events.event[3]
+          var event5 = oData.events.event[4]
+          var mapMarkerArray = [event1, event2, event3, event4, event5]
+          
+          //append the fetched events to the doc
+          var eventDiv = $("#event-display").html("<h1>" + "1. " + event1.title + "</h1>" + "<div>Venue: " + event1.venue_name + "</div>" + "<div> Start Time: " + event1.start_time + "<a href=" + event1.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "2. " + event2.title + "</h1>" + "<div>Venue: " + event2.venue_name + "</div>" + "<div> Start Time: " + event2.start_time + "<a href=" + event2.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "3. " + event3.title + "</h1>" + "<div>Venue: " + event3.venue_name + "</div>" + "<div> Start Time: " + event3.start_time + "<a href=" + event3.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "4. " + event4.title + "</h1>" + "<div>Venue: " + event4.venue_name + "</div>" + "<div> Start Time: " + event4.start_time + "<a href=" + event4.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "5. " + event5.title + "</h1>" + "<div>Venue: " + event5.venue_name + "</div>" + "<div> Start Time: " + event5.start_time + "<a href=" + event5.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>");
+            $("#event-div").show();
+    
+            //appends event map markers to google map
+            // var mapMarkerArray = [event1, event2, event3, event4, event5]
+            
+            for (i = 0; i < mapMarkerArray.length; i++) {
+              var newLat = parseFloat(mapMarkerArray[i].latitude);
+              var newLng = parseFloat(mapMarkerArray[i].longitude);
+              var myLatLng = {lat: newLat, lng: newLng};
+              var markerClick = mapMarkerArray[i].url;
+              var mapMarkerLabels = ["1", "2", "3", "4", "5"]
+              console.log(markerClick);
+              marker = new google.maps.Marker({
+                icon: icon,
+                title: oData.events.event[i].title,
+                position: myLatLng,
+                url: markerClick,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                label: {
+                  text: mapMarkerLabels[i],
+                  size: 12
+                }
+              })
+              marker.setMap(map);
+              marker.addListener('click', function() {
+                window.open(this.url, '_blank')
+
+              })
+              // console.log(newLat)
+              // console.log(newLng)
+          };
+            
+            
+            
+        })
+      }
+      eventApi(); 
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -211,7 +284,7 @@ function initMap() {
 
 
 
-//error messages for user
+//geolocation error messages for user
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
@@ -221,7 +294,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 
-//local storage on search click
+//session storage on search click (used for recent searches, but that is unused in v1.0)
 
 $("#submit").on("click", function (event) {
   // This line prevents the page from refreshing when a user hits "enter".
@@ -246,8 +319,6 @@ $("#submit").on("click", function (event) {
     $("#recentSearches").show();
   }
 });
-
-
 
 
 // databse starts here
@@ -276,67 +347,4 @@ database.ref().on("child_added", function (snapshot) {
     })
 
   });
-
-  // firebase.app().delete().then(function () {
-  //   console.log("[DEFAULT] App is Gone Now");
-  // });
-})
-
-
-$("#submit").on("click", function (event) {
-  //   event.preventDefault();
-  //   var searchQ = $("#pac-input").val().trim();
-  //   var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
-
-  //   $.ajax({
-  //     url: queryURL,
-  //     method: "GET",
-  //     dataType: JSON
-  //   })
-  //     // We store all of the retrieved data inside of an object called "response"
-  //     .then(function (response) {
-  //       // Log the resulting object
-  //       console.log(response);
-  //     })
-  // });
-
-
-
-  //Returns JSON object for EventfulAPI
-  function eventApi() {
-    var app_key = "zQnmrwHxBczn4Htn"
-    var where = $("#pac-input").val().trim();
-    var query = "music"
-    var https = "&scheme=https";
-    var oArgs = {
-      app_key: app_key.valueOf(),
-      q: query.valueOf(),
-      location: where.valueOf(),
-      within: 1,
-      "date": "This Week",
-      "include": "tags,categories",
-      page_size: 5,
-      sort_order: "popularity",
-      https: https.valueOf(),
-    }
-
-    EVDB.API.call("/events/search", oArgs, function (oData) {
-      console.log(oData)
-      console.log(oData.events.event[0].title);
-      console.log(oData.events.event[0].venue_name);
-      console.log(oData.events.event[0].start_time);
-      console.log(oData.events.event[0].stop_time);
-      var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
-        ("<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>"));
-      $("#event-div").show();
-
-    });
-  }
-  eventApi();
 });
-
-
-
-
-
-

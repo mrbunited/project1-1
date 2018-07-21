@@ -5,162 +5,161 @@ html {
   }
   
 
-  body {
-    font: 18px "Montserrat", sans-serif;
-    line-height: 1.8;
-    color: grey;
-  }
+body {
+font: 18px "Montserrat", sans-serif;
+line-height: 1.8;
+color: grey;
+}
 
- #main-title{
-   font-size: 100px;
- } 
- 
-  @media(min-width:768px) {
+#main-title{
+font-size: 100px;
+} 
+
+@media(min-width:768px) {
     html, body {
-      /* for jumbotron */
-      
-      height: 100%;
+        /* for jumbotron */
+        
+        height: 100%;
     }
-  }
-  
-  #wrapper {
-    padding-right: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-  }
-  
-  #wrapper.toggled {
-    padding-right: 250px;
-  }
-  
-  
-  #wrapper.toggled  {
-    width: 250px;
-  }
-  
-  #content-wrapper {
-    width: 100%;
-    position: absolute;
-  }
-  
-  #wrapper.toggled #content-wrapper {
-    position: absolute;
-    margin-left: -250px;
-  }
-  
+}
 
-  
-  @media(min-width:768px) {
+#wrapper {
+padding-right: 0;
+-webkit-transition: all 0.5s ease;
+-moz-transition: all 0.5s ease;
+-o-transition: all 0.5s ease;
+transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+padding-right: 250px;
+}
+
+
+#wrapper.toggled  {
+width: 250px;
+}
+
+#content-wrapper {
+width: 100%;
+position: absolute;
+}
+
+#wrapper.toggled #content-wrapper {
+position: absolute;
+margin-left: -250px;
+}
+
+
+
+@media(min-width:768px) {
     #wrapper {
-      padding-right: 250px;
+        padding-right: 250px;
     }
     #wrapper.toggled {
-      padding-right: 0;
+        padding-right: 0;
     }
     #nav-side-wrapper {
-      width: 0;
+        width: 0;
     }
     #wrapper.toggled{
-      width: 250px;
+        width: 250px;
     }
     #content-wrapper {
-      position: relative;
+        position: relative;
     }
     #wrapper.toggled #content-wrapper {
-      position: relative;
-      margin-left: 0;
+        position: relative;
+        margin-left: 0;
     }
-  }
-  
-  .jumbotron {
-    width: 100%;
-  
-    margin: 0;
-    background-image: url(../img/concert.jpg);
-  }
-  
-  .jumbotron .container {
-    padding: initial;
-    color: white;
-  }
-  
-  .jumbotron .container h1 {
-    text-shadow: 1px 3px 8px rgba(0, 0, 0, 0.8);
-  }
-  
-  .jumbotron .container h3 {
-    text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
-  }
-  
-  .jumbotron .container p {
-    margin-top: 30px;
-  }
-  
-  
-  .vertical-centre {
-    min-height: 100%; 
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-  
-  section {
-    position: relative;
-  }
-  
-  section .container {
-    padding-top: 60px;
-    padding-bottom: 100px;
-  }
-  
-  section#portfolio {
-    background-image: url(../img/ticket.jpg);
-  }
-  
-  section#portfolio .container h1,
-  section#portfolio .container h3 {
-    color: white;
-    text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
-  }
+}
 
-  .jumbotron .container .btn {
-    margin: 15px 10px;
-    -webkit-box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
-    box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
-  }
+.jumbotron {
+width: 100%;
+margin: 0;
+background-image: url(../img/concert.jpg);
+}
 
-  .bgd {
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-attachment: fixed;
-    background-size: cover;
-  }
-  
-  @media(max-width: 768px) {
-    .bgd {
-      background-size: auto 130%;
-    }
-  }
+.jumbotron .container {
+padding: initial;
+color: white;
+}
 
-  .row {
-    padding-top: 20px;
-  }
-  
-  .thumbnail{
-    border-radius: 25px;
-      background-color: rgb(230, 213, 189);
-      border: 2px;
-      border-color: grey;
-      padding: 20px;
-      height:450px;
-      overflow-x: hidden;
-      overflow: auto;
+.jumbotron .container h1 {
+text-shadow: 1px 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+.jumbotron .container h3 {
+text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.jumbotron .container p {
+margin-top: 30px;
+}
 
 
-  }
+.vertical-centre {
+min-height: 100%; 
+min-height: 100vh;
+display: flex;
+align-items: center;
+}
+
+section {
+position: relative;
+}
+
+section .container {
+padding-top: 60px;
+padding-bottom: 100px;
+}
+
+section#portfolio {
+background-image: url(../img/ticket.jpg);
+}
+
+section#portfolio .container h1,
+section#portfolio .container h3 {
+color: white;
+text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.jumbotron .container .btn {
+margin: 15px 10px;
+-webkit-box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
+-moz-box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
+box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+.bgd {
+background-repeat: no-repeat;
+background-position: 50% 50%;
+background-attachment: fixed;
+background-size: cover;
+}
+
+@media(max-width: 768px) {
+.bgd {
+    background-size: auto 130%;
+}
+}
+
+.row {
+padding-top: 20px;
+}
+
+.thumbnail{
+border-radius: 25px;
+    background-color: rgb(230, 213, 189);
+    border: 2px;
+    border-color: grey;
+    padding: 20px;
+    height:450px;
+    overflow-x: hidden;
+    overflow: auto;
+
+
+}
 
 /* Styling for map, must have these to display on document */
 #map {
@@ -170,13 +169,13 @@ html {
 }
 
 .pac-card {
-    margin: 10px 10px 0 0;
+    /* margin: 10px 10px 0 0; */
     border-radius: 2px 0 0 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     outline: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
+    /* background-color: #fff; */
     font-family: Roboto;
   }
 
@@ -201,12 +200,18 @@ html {
     font-family: Roboto;
     font-size: 17px;
     font-weight: 300;
-margin-right: 20px;
+    margin-right: 20px;
     text-overflow: ellipsis;
     width: 500px;
-height: 40px;
+    height: 40px;
 }
 
 #pac-input:focus {
     border-color: #4d90fe;
   }
+
+.mapLabels {
+    color: #fff;
+
+
+}
