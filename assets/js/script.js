@@ -224,18 +224,18 @@ function initMap() {
           var event3 = oData.events.event[2]
           var event4 = oData.events.event[3]
           var event5 = oData.events.event[4]
-          
+          var mapMarkerArray = [event1, event2, event3, event4, event5]
           
           //append the fetched events to the doc
-          var eventDiv = $("#event-display").html("<h1>" + "1. " + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
-            "<h1>" + "2. " + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
-            "<h1>" + "3. " + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
-            "<h1>" + "4. " + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
-            "<h1>" + "5. " + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
+          var eventDiv = $("#event-display").html("<h1>" + "1. " + event1.title + "</h1>" + "<div>Venue: " + event1.venue_name + "</div>" + "<div> Start Time: " + event1.start_time + "<a href=" + event1.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "2. " + event2.title + "</h1>" + "<div>Venue: " + event2.venue_name + "</div>" + "<div> Start Time: " + event2.start_time + "<a href=" + event2.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "3. " + event3.title + "</h1>" + "<div>Venue: " + event3.venue_name + "</div>" + "<div> Start Time: " + event3.start_time + "<a href=" + event3.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "4. " + event4.title + "</h1>" + "<div>Venue: " + event4.venue_name + "</div>" + "<div> Start Time: " + event4.start_time + "<a href=" + event4.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>" +
+            "<h1>" + "5. " + event5.title + "</h1>" + "<div>Venue: " + event5.venue_name + "</div>" + "<div> Start Time: " + event5.start_time + "<a href=" + event5.url + ">" + "<br>" + "Info" + "</a>" + "</div>" + "<br>");
             $("#event-div").show();
     
             //appends event map markers to google map
-            var mapMarkerArray = [event1, event2, event3, event4, event5]
+            // var mapMarkerArray = [event1, event2, event3, event4, event5]
             
             for (i = 0; i < mapMarkerArray.length; i++) {
               var newLat = parseFloat(mapMarkerArray[i].latitude);
