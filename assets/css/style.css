@@ -209,3 +209,9 @@ border-radius: 25px;
 #pac-input:focus {
     border-color: #4d90fe;
   }
+
+.mapLabels {
+    color: #fff;
+
+
+}

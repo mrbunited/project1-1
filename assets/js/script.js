@@ -86,7 +86,7 @@ function initMap() {
   }
   var input = document.getElementById("pac-input");
   var searchBox = new google.maps.places.SearchBox(input);
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
   
 
   $("#submit").on("click", function (event) {
@@ -97,6 +97,7 @@ function initMap() {
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function () {
       searchBox.setBounds(map.getBounds());
+      zoom: 12;
     });
 
     var markers = [];
@@ -135,7 +136,8 @@ function initMap() {
           map: map,
           icon: icon,
           title: place.name,
-          position: place.geometry.location
+          position: place.geometry.location,
+          animation: google.maps.Animation.DROP,
         }));
 
         if (place.geometry.viewport) {
@@ -146,6 +148,7 @@ function initMap() {
         }
       });
       map.fitBounds(bounds);
+      
     });
   })
   // Bias the SearchBox results towards current map's viewport.
@@ -196,7 +199,8 @@ function initMap() {
         title: place.name,
         position: place.geometry.location
       }));
-
+     
+      //This function returns JSON object from the Eventful.com API, set query parameters here
       function eventApi() {
         var app_key = "zQnmrwHxBczn4Htn"
         var where = $("#pac-input").val().trim();
@@ -213,7 +217,7 @@ function initMap() {
           sort_order: "popularity",
           https: https.valueOf(),
         }
-    
+        //use the Eventful library to call the query
         EVDB.API.call("/events/search", oArgs, function (oData) {
           var event1 = oData.events.event[0]
           var event2 = oData.events.event[1]
@@ -222,29 +226,43 @@ function initMap() {
           var event5 = oData.events.event[4]
           
           
-          
-          var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
-            "<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
-            "<h1>" + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
-            "<h1>" + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
-            "<h1>" + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
+          //append the fetched events to the doc
+          var eventDiv = $("#event-display").html("<h1>" + "1. " + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
+            "<h1>" + "2. " + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
+            "<h1>" + "3. " + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
+            "<h1>" + "4. " + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
+            "<h1>" + "5. " + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
             $("#event-div").show();
     
             //appends event map markers to google map
             var mapMarkerArray = [event1, event2, event3, event4, event5]
+            
             for (i = 0; i < mapMarkerArray.length; i++) {
-              var newLat = parseFloat(mapMarkerArray[i].latitude)
-              var newLng = parseFloat(mapMarkerArray[i].longitude)
-              var myLatLng = {lat: newLat, lng: newLng}
+              var newLat = parseFloat(mapMarkerArray[i].latitude);
+              var newLng = parseFloat(mapMarkerArray[i].longitude);
+              var myLatLng = {lat: newLat, lng: newLng};
+              var markerClick = mapMarkerArray[i].url;
+              var mapMarkerLabels = ["1", "2", "3", "4", "5"]
+              console.log(markerClick);
               marker = new google.maps.Marker({
-              icon: icon,
-              title: oData.events.event[i].title,
-              position: myLatLng,
-              map: map,
-              });
+                icon: icon,
+                title: oData.events.event[i].title,
+                position: myLatLng,
+                url: markerClick,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                label: {
+                  text: mapMarkerLabels[i],
+                  size: 12
+                }
+              })
               marker.setMap(map);
-              console.log(newLat)
-              console.log(newLng)
+              marker.addListener('click', function() {
+                window.open(this.url, '_blank')
+
+              })
+              // console.log(newLat)
+              // console.log(newLng)
           };
             
             
@@ -252,14 +270,6 @@ function initMap() {
         })
       }
       eventApi(); 
-
-
-
-
-
-
-
-
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -274,7 +284,7 @@ function initMap() {
 
 
 
-//error messages for user
+//geolocation error messages for user
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
@@ -284,7 +294,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 
-//local storage on search click
+//session storage on search click (used for recent searches, but that is unused in v1.0)
 
 $("#submit").on("click", function (event) {
   // This line prevents the page from refreshing when a user hits "enter".
@@ -309,8 +319,6 @@ $("#submit").on("click", function (event) {
     $("#recentSearches").show();
   }
 });
-
-
 
 
 // databse starts here
@@ -339,64 +347,4 @@ database.ref().on("child_added", function (snapshot) {
     })
 
   });
-});
-
-$("#submit").on("click", function (event) {
-  event.preventDefault();
-  // Returns JSON object for EventfulAPI
-  // function eventApi() {
-  //   var app_key = "zQnmrwHxBczn4Htn"
-  //   var where = $("#pac-input").val().trim();
-  //   var query = "music"
-  //   var https = "&scheme=https";
-  //   var oArgs = {
-  //     app_key: app_key.valueOf(),
-  //     q: query.valueOf(),
-  //     location: where.valueOf(),
-  //     within: 1,
-  //     "date": "This Week",
-  //     "include": "tags,categories",
-  //     page_size: 5,
-  //     sort_order: "popularity",
-  //     https: https.valueOf(),
-  //   }
-
-  //   EVDB.API.call("/events/search", oArgs, function (oData) {
-  //     var event1 = oData.events.event[0]
-  //     var event2 = oData.events.event[1]
-  //     var event3 = oData.events.event[2]
-  //     var event4 = oData.events.event[3]
-  //     var event5 = oData.events.event[4]
-      
-      
-      
-  //     var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
-  //       "<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
-  //       "<h1>" + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
-  //       "<h1>" + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
-  //       "<h1>" + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
-  //       $("#event-div").show();
-
-  //       var mapMarkerArray = [event1, event2, event3, event4, event5]
-  //       for (i = 0; i < mapMarkerArray.length; i++) {
-  //         var lat = parseFloat(event1.latitude)
-  //         var lng = parseFloat(event1.longitude)
-  //         var myLatLng = {lat: 25.654587, lng: -56.2992080}
-  //         marker = new google.maps.Marker({
-  //         icon: icon,
-  //         title: place.name,
-  //         position: myLatLng,
-  //         map: map,
-  //         title: 'Hello World!'
-  //         });
-  //         marker.setMap(map);
-  //         console.log(lat)
-  //         console.log(lng)
-  //     };
-        
-        
-        
-  //   })
-  // }
-  // eventApi(); 
 });
