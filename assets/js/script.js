@@ -84,11 +84,10 @@ function initMap() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   }
-
   var input = document.getElementById("pac-input");
   var searchBox = new google.maps.places.SearchBox(input);
   // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+  
 
   $("#submit").on("click", function (event) {
     event.preventDefault();
@@ -173,7 +172,7 @@ function initMap() {
     markers.forEach(function (marker) {
       marker.setMap(null);
     });
-    markers = [];
+    
 
     // Get icon, name, location
     var bounds = new google.maps.LatLngBounds();
@@ -190,13 +189,77 @@ function initMap() {
         scaledSize: new google.maps.Size(25, 25)
       };
 
-      // Create a marker for each search
+      // Create a marker for each search city location
       markers.push(new google.maps.Marker({
         map: map,
         icon: icon,
         title: place.name,
         position: place.geometry.location
       }));
+
+      function eventApi() {
+        var app_key = "zQnmrwHxBczn4Htn"
+        var where = $("#pac-input").val().trim();
+        var query = "music"
+        var https = "&scheme=https";
+        var oArgs = {
+          app_key: app_key.valueOf(),
+          q: query.valueOf(),
+          location: where.valueOf(),
+          within: 1,
+          "date": "This Week",
+          "include": "tags,categories",
+          page_size: 5,
+          sort_order: "popularity",
+          https: https.valueOf(),
+        }
+    
+        EVDB.API.call("/events/search", oArgs, function (oData) {
+          var event1 = oData.events.event[0]
+          var event2 = oData.events.event[1]
+          var event3 = oData.events.event[2]
+          var event4 = oData.events.event[3]
+          var event5 = oData.events.event[4]
+          
+          
+          
+          var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
+            "<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
+            "<h1>" + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
+            "<h1>" + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
+            "<h1>" + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
+            $("#event-div").show();
+    
+            //appends event map markers to google map
+            var mapMarkerArray = [event1, event2, event3, event4, event5]
+            for (i = 0; i < mapMarkerArray.length; i++) {
+              var newLat = parseFloat(mapMarkerArray[i].latitude)
+              var newLng = parseFloat(mapMarkerArray[i].longitude)
+              var myLatLng = {lat: newLat, lng: newLng}
+              marker = new google.maps.Marker({
+              icon: icon,
+              title: oData.events.event[i].title,
+              position: myLatLng,
+              map: map,
+              });
+              marker.setMap(map);
+              console.log(newLat)
+              console.log(newLng)
+          };
+            
+            
+            
+        })
+      }
+      eventApi(); 
+
+
+
+
+
+
+
+
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -276,67 +339,64 @@ database.ref().on("child_added", function (snapshot) {
     })
 
   });
-
-  // firebase.app().delete().then(function () {
-  //   console.log("[DEFAULT] App is Gone Now");
-  // });
-})
-
-
-$("#submit").on("click", function (event) {
-  //   event.preventDefault();
-  //   var searchQ = $("#pac-input").val().trim();
-  //   var queryURL = "http://api.eventful.com/json/events/search?q=music&l=" + searchQ;
-
-  //   $.ajax({
-  //     url: queryURL,
-  //     method: "GET",
-  //     dataType: JSON
-  //   })
-  //     // We store all of the retrieved data inside of an object called "response"
-  //     .then(function (response) {
-  //       // Log the resulting object
-  //       console.log(response);
-  //     })
-  // });
-
-
-
-  //Returns JSON object for EventfulAPI
-  function eventApi() {
-    var app_key = "zQnmrwHxBczn4Htn"
-    var where = $("#pac-input").val().trim();
-    var query = "music"
-    var https = "&scheme=https";
-    var oArgs = {
-      app_key: app_key.valueOf(),
-      q: query.valueOf(),
-      location: where.valueOf(),
-      within: 1,
-      "date": "This Week",
-      "include": "tags,categories",
-      page_size: 5,
-      sort_order: "popularity",
-      https: https.valueOf(),
-    }
-
-    EVDB.API.call("/events/search", oArgs, function (oData) {
-      console.log(oData)
-      console.log(oData.events.event[0].title);
-      console.log(oData.events.event[0].venue_name);
-      console.log(oData.events.event[0].start_time);
-      console.log(oData.events.event[0].stop_time);
-      var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
-        ("<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>"));
-      $("#event-div").show();
-
-    });
-  }
-  eventApi();
 });
 
+$("#submit").on("click", function (event) {
+  event.preventDefault();
+  // Returns JSON object for EventfulAPI
+  // function eventApi() {
+  //   var app_key = "zQnmrwHxBczn4Htn"
+  //   var where = $("#pac-input").val().trim();
+  //   var query = "music"
+  //   var https = "&scheme=https";
+  //   var oArgs = {
+  //     app_key: app_key.valueOf(),
+  //     q: query.valueOf(),
+  //     location: where.valueOf(),
+  //     within: 1,
+  //     "date": "This Week",
+  //     "include": "tags,categories",
+  //     page_size: 5,
+  //     sort_order: "popularity",
+  //     https: https.valueOf(),
+  //   }
 
+  //   EVDB.API.call("/events/search", oArgs, function (oData) {
+  //     var event1 = oData.events.event[0]
+  //     var event2 = oData.events.event[1]
+  //     var event3 = oData.events.event[2]
+  //     var event4 = oData.events.event[3]
+  //     var event5 = oData.events.event[4]
+      
+      
+      
+  //     var eventDiv = $("#event-display").html("<h1>" + oData.events.event[0].title + "</h1>" + "<div>Venue: " + oData.events.event[0].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[0].start_time + "</div>" + "<br>" +
+  //       "<h1>" + oData.events.event[1].title + "</h1>" + "<div>Venue: " + oData.events.event[1].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[1].start_time + "</div>" + "<br>" +
+  //       "<h1>" + oData.events.event[2].title + "</h1>" + "<div>Venue: " + oData.events.event[2].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[2].start_time + "</div>" + "<br>" +
+  //       "<h1>" + oData.events.event[3].title + "</h1>" + "<div>Venue: " + oData.events.event[3].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[3].start_time + "</div>" + "<br>" +
+  //       "<h1>" + oData.events.event[4].title + "</h1>" + "<div>Venue: " + oData.events.event[4].venue_name + "</div>" + "<div> Start Time: " + oData.events.event[4].start_time + "</div>");
+  //       $("#event-div").show();
 
-
-
-
+  //       var mapMarkerArray = [event1, event2, event3, event4, event5]
+  //       for (i = 0; i < mapMarkerArray.length; i++) {
+  //         var lat = parseFloat(event1.latitude)
+  //         var lng = parseFloat(event1.longitude)
+  //         var myLatLng = {lat: 25.654587, lng: -56.2992080}
+  //         marker = new google.maps.Marker({
+  //         icon: icon,
+  //         title: place.name,
+  //         position: myLatLng,
+  //         map: map,
+  //         title: 'Hello World!'
+  //         });
+  //         marker.setMap(map);
+  //         console.log(lat)
+  //         console.log(lng)
+  //     };
+        
+        
+        
+  //   })
+  // }
+  // eventApi(); 
+});
